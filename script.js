@@ -236,6 +236,9 @@ function renderCard(item) {
       <div class="card-meta">
         ${item.cidade        ? `<span>📍 ${item.cidade}</span>` : ''}
         ${item.equipamentos  ? `<span>⚙️ ${item.equipamentos}</span>` : ''}
+        ${item.tecnicos      ? `<span> ${item.tecnicos}</span>` : ''}
+        ${item.veiculo       ? `<span> ${item.veiculo}</span>` : ''}
+        ${equipe             ? `<span> ${equipe}</span>` : ''}
       </div>
       ${item.observacao ? `<div class="card-obs">${item.observacao}</div>` : ''}
     </div>
