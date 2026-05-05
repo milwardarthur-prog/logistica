@@ -1,7 +1,7 @@
 // script.js
 
 const CSV_FILE = 'dados.csv';
-const REFRESH_INTERVAL = 5 * 60; // segundos
+const REFRESH_INTERVAL = 5 * 60;
 
 let allData = [];
 let searchTerm = '';
@@ -40,49 +40,43 @@ function formatTime(hora) {
 // ─── DIAS DA SEMANA ──────────────────────────────────────────────
 
 const DIAS_NOMES = ['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
-const DIAS_ABREV = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
 
 function getDayKey(date) {
-  // Retorna string YYYY-MM-DD
   return date.toISOString().split('T')[0];
 }
 
 function getWindowDays() {
   const today = new Date();
   today.setHours(0,0,0,0);
-  const dow = today.getDay(); // 0=dom, 5=sex, 6=sab
+  const dow = today.getDay();
 
   const days = [];
 
   if (dow === 5) {
-    // Sexta: SEX, SÁB/DOM, SEG
-    const sex  = new Date(today);
-    const sab  = new Date(today); sab.setDate(today.getDate() + 1);
-    const dom  = new Date(today); dom.setDate(today.getDate() + 2);
-    const seg  = new Date(today); seg.setDate(today.getDate() + 3);
-    days.push({ label: 'SEXTA',   date: sex,  isToday: true,  keys: [getDayKey(sex)] });
-    days.push({ label: 'SÁB/DOM', date: sab,  isToday: false, keys: [getDayKey(sab), getDayKey(dom)] });
-    days.push({ label: 'SEGUNDA', date: seg,  isToday: false, keys: [getDayKey(seg)] });
+    const sex = new Date(today);
+    const sab = new Date(today); sab.setDate(today.getDate() + 1);
+    const dom = new Date(today); dom.setDate(today.getDate() + 2);
+    const seg = new Date(today); seg.setDate(today.getDate() + 3);
+    days.push({ label: 'SEXTA',   date: sex, isToday: true,  keys: [getDayKey(sex)] });
+    days.push({ label: 'SÁB/DOM', date: sab, isToday: false, keys: [getDayKey(sab), getDayKey(dom)] });
+    days.push({ label: 'SEGUNDA', date: seg, isToday: false, keys: [getDayKey(seg)] });
   } else if (dow === 6) {
-    // Sábado: SÁB/DOM, SEG, TER
-    const sab  = new Date(today);
-    const dom  = new Date(today); dom.setDate(today.getDate() + 1);
-    const seg  = new Date(today); seg.setDate(today.getDate() + 2);
-    const ter  = new Date(today); ter.setDate(today.getDate() + 3);
-    days.push({ label: 'SÁB/DOM', date: sab,  isToday: true,  keys: [getDayKey(sab), getDayKey(dom)] });
-    days.push({ label: 'SEGUNDA', date: seg,  isToday: false, keys: [getDayKey(seg)] });
-    days.push({ label: 'TERÇA',   date: ter,  isToday: false, keys: [getDayKey(ter)] });
+    const sab = new Date(today);
+    const dom = new Date(today); dom.setDate(today.getDate() + 1);
+    const seg = new Date(today); seg.setDate(today.getDate() + 2);
+    const ter = new Date(today); ter.setDate(today.getDate() + 3);
+    days.push({ label: 'SÁB/DOM', date: sab, isToday: true,  keys: [getDayKey(sab), getDayKey(dom)] });
+    days.push({ label: 'SEGUNDA', date: seg, isToday: false, keys: [getDayKey(seg)] });
+    days.push({ label: 'TERÇA',   date: ter, isToday: false, keys: [getDayKey(ter)] });
   } else if (dow === 0) {
-    // Domingo: SÁB/DOM (ontem+hoje), SEG, TER
-    const sab  = new Date(today); sab.setDate(today.getDate() - 1);
-    const dom  = new Date(today);
-    const seg  = new Date(today); seg.setDate(today.getDate() + 1);
-    const ter  = new Date(today); ter.setDate(today.getDate() + 2);
-    days.push({ label: 'SÁB/DOM', date: dom,  isToday: true,  keys: [getDayKey(sab), getDayKey(dom)] });
-    days.push({ label: 'SEGUNDA', date: seg,  isToday: false, keys: [getDayKey(seg)] });
-    days.push({ label: 'TERÇA',   date: ter,  isToday: false, keys: [getDayKey(ter)] });
+    const sab = new Date(today); sab.setDate(today.getDate() - 1);
+    const dom = new Date(today);
+    const seg = new Date(today); seg.setDate(today.getDate() + 1);
+    const ter = new Date(today); ter.setDate(today.getDate() + 2);
+    days.push({ label: 'SÁB/DOM', date: dom, isToday: true,  keys: [getDayKey(sab), getDayKey(dom)] });
+    days.push({ label: 'SEGUNDA', date: seg, isToday: false, keys: [getDayKey(seg)] });
+    days.push({ label: 'TERÇA',   date: ter, isToday: false, keys: [getDayKey(ter)] });
   } else {
-    // Dias normais: hoje + 2 próximos
     for (let i = 0; i < 3; i++) {
       const d = new Date(today);
       d.setDate(today.getDate() + i);
@@ -109,7 +103,6 @@ function parseCSV(text) {
   const lines = text.split(/\r?\n/).filter(l => l.trim());
   if (lines.length < 2) return [];
 
-  // Detectar separador
   const sep = lines[0].includes(';') ? ';' : ',';
   const headers = lines[0].split(sep).map(h => normalizeStr(h));
 
@@ -123,6 +116,9 @@ function parseCSV(text) {
   const iEqp  = idx('equipamentos');
   const iTec  = idx('tecnicos');
   const iSta  = idx('status');
+  const iVei  = idx('veiculo');
+  const iMot  = idx('motorista');
+  const iAju  = idx('ajudante');
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
@@ -142,6 +138,9 @@ function parseCSV(text) {
       equipamentos: get(iEqp),
       tecnicos:     get(iTec),
       status:       get(iSta),
+      veiculo:      get(iVei),
+      motorista:    get(iMot),
+      ajudante:     get(iAju),
     });
   }
   return rows;
@@ -150,23 +149,20 @@ function parseCSV(text) {
 // ─── MAPEAMENTO DIA → DATA ────────────────────────────────────────
 
 function mapDiaToDate(diaStr) {
-  // Tenta interpretar o campo DIA como data (DD/MM, DD/MM/YYYY) ou nome do dia
   const s = diaStr.trim();
 
-  // Formato DD/MM/YYYY
   let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (m) {
     const d = new Date(parseInt(m[3]), parseInt(m[2])-1, parseInt(m[1]));
     return getDayKey(d);
   }
-  // Formato DD/MM
   m = s.match(/^(\d{1,2})\/(\d{1,2})$/);
   if (m) {
     const now = new Date();
     const d = new Date(now.getFullYear(), parseInt(m[2])-1, parseInt(m[1]));
     return getDayKey(d);
   }
-  // Nome do dia (segunda, terça, etc.)
+
   const norm = normalizeStr(s);
   const nomes = ['domingo','segunda','terca','quarta','quinta','sexta','sabado'];
   const idx = nomes.findIndex(n => norm.includes(n));
@@ -215,7 +211,7 @@ function renderTags(tipoStr) {
 
 function getStatusClass(status) {
   const n = normalizeStr(status);
-  if (n.includes('conclu')) return 'status-concluido';
+  if (n.includes('conclu') || n === 'ok') return 'status-concluido';
   if (n.includes('cancel')) return 'status-cancelado';
   if (n.includes('andamento') || n.includes('progress')) return 'status-andamento';
   return 'status-pendente';
@@ -228,6 +224,8 @@ function renderCard(item) {
     ? `<span class="status-badge ${getStatusClass(item.status)}">${item.status}</span>`
     : '';
 
+  const equipe = [item.motorista, item.ajudante].filter(Boolean).join(' + ');
+
   return `
     <div class="card">
       <div class="card-header">
@@ -239,6 +237,8 @@ function renderCard(item) {
         ${item.cidade        ? `<span>📍 ${item.cidade}</span>` : ''}
         ${item.equipamentos  ? `<span>⚙️ ${item.equipamentos}</span>` : ''}
         ${item.tecnicos      ? `<span>👤 ${item.tecnicos}</span>` : ''}
+        ${item.veiculo       ? `<span>🚗 ${item.veiculo}</span>` : ''}
+        ${equipe             ? `<span>🧑‍✈️ ${equipe}</span>` : ''}
       </div>
       ${item.observacao ? `<div class="card-obs">${item.observacao}</div>` : ''}
     </div>
@@ -251,7 +251,6 @@ function renderPainel(data) {
   const container = document.getElementById('painelContainer');
   const windowDays = getWindowDays();
 
-  // Mapear dados por chave de data
   const byDate = {};
   data.forEach(item => {
     const key = mapDiaToDate(item.dia);
@@ -260,7 +259,6 @@ function renderPainel(data) {
     byDate[key].push(item);
   });
 
-  // Ordenar cada dia por hora
   Object.values(byDate).forEach(arr => {
     arr.sort((a, b) => {
       const ta = parseTime(a.hora);
@@ -272,32 +270,31 @@ function renderPainel(data) {
     });
   });
 
-  // Filtro de busca
   const term = normalizeStr(searchTerm);
 
   container.innerHTML = '';
 
   windowDays.forEach(dayInfo => {
-    // Coletar itens de todas as keys do dia
     let items = [];
     dayInfo.keys.forEach(k => {
       if (byDate[k]) items = items.concat(byDate[k]);
     });
 
-    // Aplicar filtro
     if (term) {
       items = items.filter(item =>
         normalizeStr(item.cliente).includes(term) ||
         normalizeStr(item.cidade).includes(term) ||
         normalizeStr(item.equipamentos).includes(term) ||
-        normalizeStr(item.tipo).includes(term)
+        normalizeStr(item.tipo).includes(term) ||
+        normalizeStr(item.veiculo).includes(term) ||
+        normalizeStr(item.motorista).includes(term) ||
+        normalizeStr(item.ajudante).includes(term)
       );
     }
 
     const row = document.createElement('div');
     row.className = 'day-row';
 
-    // Label do dia
     const label = document.createElement('div');
     label.className = 'day-label' + (dayInfo.isToday ? ' today' : '');
     label.innerHTML = `
@@ -306,7 +303,6 @@ function renderPainel(data) {
     `;
     row.appendChild(label);
 
-    // Ticker
     const wrapper = document.createElement('div');
     wrapper.className = 'ticker-wrapper';
 
@@ -322,12 +318,9 @@ function renderPainel(data) {
         track.classList.add('static');
         track.innerHTML = cardsHtml;
       } else {
-        // Duplicar para loop contínuo
         track.classList.add('scrolling');
         track.innerHTML = cardsHtml + cardsHtml;
-
-        // Velocidade: ~60px/s base, mais cards = mais rápido
-        const cardWidth = 270; // px estimado por card + gap
+        const cardWidth = 270;
         const totalWidth = items.length * cardWidth;
         const speed = Math.max(20, Math.min(60, 30 + items.length * 2));
         const duration = totalWidth / speed;
