@@ -322,7 +322,7 @@ function renderPainel(data) {
         track.innerHTML = cardsHtml + cardsHtml;
         const cardWidth = 270;
         const totalWidth = items.length * cardWidth;
-        const speed = Math.max(20, Math.min(60, 30 + items.length * 2));
+        const speed = Math.max(10, Math.min(30, 15 + items.length * 1));
         const duration = totalWidth / speed;
         track.style.animationDuration = duration + 's';
       }
