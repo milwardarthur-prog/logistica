@@ -158,9 +158,9 @@ html, body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 10px 14px;
-  min-width: 240px;
-  max-width: 300px;
-  height: 90%;
+  min-width: 350px;
+  max-width: 350px;
+  height: 100%;
   vertical-align: top;
   white-space: normal;
   flex-shrink: 0;
@@ -238,9 +238,7 @@ html, body {
   font-size: 0.75rem;
   color: #64748b;
   margin-top: 5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
   font-style: italic;
 }
 
