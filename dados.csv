@@ -1,0 +1,10 @@
+DIA;HORA;TIPO;OBSERVACAO;CLIENTE;CIDADE;EQUIPAMENTOS;TECNICOS;STATUS
+Segunda;;AC;Verificar contrato;Cliente Delta;Guarulhos;;;Pendente
+Terça;09:00;ENTREGA+INSTALAÇÃO;Urgente;Empresa Épsilon;São Paulo;LED Wall;João Silva;Pendente
+Terça;11:00;EVENTO;Conferência anual;Empresa Zeta;Osasco;Palco + Som + Luz;Carlos Lima;Pendente
+Terça;15:30;MANUTENÇÃO;;Cliente Eta;ABC;Gerador;Ana Costa;Pendente
+Quarta;08:30;ENTREGA;Confirmar endereço;Empresa Theta;São Paulo;Cadeiras + Mesas;João Silva;Pendente
+Quarta;13:00;RETIRADA;;Empresa Iota;Guarulhos;Tendas;Carlos Lima;Pendente
+Quinta;08:00;ENTREGA;Entregar antes das 10h;Empresa Alpha;São Paulo;Projetor + Tela;João Silva;Pendente
+Quinta;10:30;INSTALAÇÃO;Instalação completa;Empresa Beta;Campinas;Som + Iluminação;Carlos Lima;Andamento
+Quinta;14:00;RETIRADA;;Empresa Gama;Santos;Estrutura Metálica;Ana Costa;Pendente
