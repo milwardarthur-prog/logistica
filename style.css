@@ -28,7 +28,7 @@ body {
     padding: 0 20px;
 }
 
-.logo { font-weight: bold; font-size: 1.2rem; color: var(--accent-blue); }
+.logo { font-weight: bold; font-size: 0.8rem; color: var(--accent-blue); }
 
 .search-container input {
     padding: 4px 12px;
@@ -37,7 +37,7 @@ body {
     width: 300px;
 }
 
-.refresh-info { font-size: 0.85rem; color: var(--text-secondary); }
+.refresh-info { font-size: 0.5rem; color: var(--text-secondary); }
 
 /* CONTAINER PRINCIPAL */
 #painelContainer {
@@ -67,8 +67,8 @@ body {
     text-align: center;
 }
 
-.dia-nome { font-size: 1.4rem; }
-.dia-data { font-size: 0.9rem; color: var(--text-secondary); }
+.dia-nome { font-size: 0.8rem; }
+.dia-data { font-size: 0.5rem; color: var(--text-secondary); }
 
 .cards-container {
     flex: 1;
@@ -121,7 +121,7 @@ body {
 .card-hora {
     color: var(--accent-blue);
     font-weight: bold;
-    font-size: 0.78rem;
+    font-size: 0.5rem;
     text-transform: uppercase;
     white-space: normal;
     word-break: break-word;
@@ -139,7 +139,7 @@ body {
 .badge {
     padding: 2px 8px;
     border-radius: 20px;
-    font-size: 0.65rem;
+    font-size: 0.45rem;
     font-weight: bold;
     border: 1px solid rgba(0,0,0,0.1);
     white-space: nowrap;
@@ -155,7 +155,7 @@ body {
 }
 
 .card-client {
-    font-size: 1rem;
+    font-size: 0.6rem;
     font-weight: bold;
     white-space: normal;
     word-break: break-word;
@@ -164,7 +164,7 @@ body {
 }
 
 .card-meta {
-    font-size: 0.75rem;
+    font-size: 0.45rem;
     color: var(--text-secondary);
     white-space: normal;
     word-break: break-word;
@@ -190,7 +190,7 @@ body {
 }
 
 .equip-list {
-    font-size: 0.72rem;
+    font-size: 0.45rem;
     color: #343a40;
     line-height: 1.2;
     white-space: normal;
@@ -231,7 +231,7 @@ body {
     padding: 5px 8px;
     background: #fffbe6;
     border-left: 3px solid #ffe58f;
-    font-size: 0.72rem;
+    font-size: 0.45rem;
     font-style: italic;
     flex-shrink: 0;
     white-space: normal;
