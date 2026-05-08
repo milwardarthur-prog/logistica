@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Painel Logística Semanal</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento Logístico - Full HD</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top-bar">
-    <div class="logo">📦 Logística Semanal</div>
-    <div class="search-wrap">
-      <input type="text" id="searchInput" placeholder="🔍 Buscar cliente, cidade, tipo..." />
-    </div>
-    <div class="refresh-info">
-      <span id="lastUpdate">--:--</span>
-      <span class="refresh-label">Atualiza em <span id="countdown">5:00</span></span>
-    </div>
-  </header>
-  <main id="painelContainer">
-    <div class="loading">Carregando dados...</div>
-  </main>
-  <script src="script.js"></script>
+    <header class="top-bar">
+        <div class="logo">LOGÍSTICA SEMANAL</div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Filtrar por cliente, cidade, equipamento, tipo...">
+        </div>
+        <div class="refresh-info">
+            <span>Próxima atualização em: <strong id="timer">05:00</strong></span>
+        </div>
+    </header>
+
+    <main id="painelContainer">
+        <!-- As linhas de dias e os cards serão gerados aqui pelo script.js -->
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
