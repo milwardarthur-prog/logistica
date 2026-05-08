@@ -87,14 +87,14 @@ body {
 .card {
     min-width: calc((100vw - 120px) / 3 - 15px); /* Exatamente 3 cards visíveis por linha */
     max-width: calc((100vw - 120px) / 3 - 15px);
-    height: 92%;
+    height: 94%;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 10px 12px;
+    padding: 8px 10px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     overflow: hidden; /* Garante que nada vaze para fora do card */
 }
@@ -155,20 +155,20 @@ body {
 }
 
 .card-client {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: bold;
     white-space: normal;
     word-break: break-word;
-    line-height: 1.2;
+    line-height: 1.1;
     flex-shrink: 0;
 }
 
 .card-meta {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     white-space: normal;
     word-break: break-word;
-    line-height: 1.3;
+    line-height: 1.2;
     flex-shrink: 0;
 }
 
@@ -190,9 +190,9 @@ body {
 }
 
 .equip-list {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #343a40;
-    line-height: 1.3;
+    line-height: 1.2;
     white-space: normal;
     word-break: break-word;
 }
@@ -201,22 +201,22 @@ body {
 .card-tech-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4px;
+    gap: 3px;
     flex-shrink: 0;
 }
 
 .tech-item {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 6px;
+    gap: 4px;
+    padding: 3px 6px;
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.05);
 }
 
-.tech-icon { font-size: 0.9rem; flex-shrink: 0; }
-.tech-label { display: block; font-size: 0.55rem; font-weight: bold; text-transform: uppercase; opacity: 0.8; }
-.tech-value { font-size: 0.75rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tech-icon { font-size: 0.8rem; flex-shrink: 0; }
+.tech-label { display: block; font-size: 0.5rem; font-weight: bold; text-transform: uppercase; opacity: 0.8; }
+.tech-value { font-size: 0.72rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* CORES BLOCO TÉCNICO */
 .t-tensao { background: #fff3cd; color: #856404; border-color: #ffe69c; }
