@@ -1,57 +1,143 @@
+const CONFIG = {
+    csvUrl: 'dados.csv',
+    refreshSeconds: 300
+};
+
+let rawData = [];
+
+/* LIMPA DADOS */
 function limpar(v) {
     if (!v) return '';
-    return v.toString().trim().replace(/^nan$/i, '');
+    if (v.toLowerCase() === 'nan') return '';
+    return v.trim();
 }
 
-function createCard(item) {
+/* FETCH */
+async function fetchData() {
+    const res = await fetch(CONFIG.csvUrl + '?t=' + Date.now());
+    const text = await res.text();
+    parseCSV(text);
+    render();
+}
+
+/* PARSE CSV (FORÇADO ;) */
+function parseCSV(text) {
+    const lines = text.split('\n').filter(l => l.trim());
+    const headers = lines[0].split(';');
+
+    rawData = lines.slice(1).map(line => {
+        const values = line.split(';');
+        let obj = {};
+        headers.forEach((h, i) => {
+            obj[h.trim().toUpperCase()] = limpar(values[i] || '');
+        });
+        return obj;
+    });
+}
+
+/* DIAS */
+function getDays() {
+    const hoje = new Date();
+    const dias = ['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
+
+    if (hoje.getDay() === 5) {
+        return ['SEXTA','SÁBADO+DOMINGO','SEGUNDA'];
+    }
+
+    return [
+        dias[hoje.getDay()],
+        dias[(hoje.getDay()+1)%7],
+        dias[(hoje.getDay()+2)%7]
+    ];
+}
+
+/* RENDER */
+function render() {
+    const container = document.getElementById('painelContainer');
+    container.innerHTML = '';
+
+    const days = getDays();
+
+    days.forEach(day => {
+        const row = document.createElement('div');
+        row.className = 'dia-row';
+
+        const label = document.createElement('div');
+        label.className = 'dia-label';
+        label.innerText = day;
+
+        const cards = document.createElement('div');
+        cards.className = 'cards-container';
+
+        let data = rawData.filter(item => {
+            const d = item.DIA.toUpperCase();
+
+            if (day === 'SÁBADO+DOMINGO') {
+                return d.includes('SÁBADO') || d.includes('DOMINGO');
+            }
+
+            return d.includes(day);
+        });
+
+        data.forEach(item => cards.appendChild(createCard(item)));
+
+        row.appendChild(label);
+        row.appendChild(cards);
+        container.appendChild(row);
+    });
+}
+
+/* CARD */
+function createCard(i) {
+    const equipe = [i.MOTORISTA, i.AJUDANTE, i.TECNICOS].filter(x => x).join(' + ') || '-';
+
     const card = document.createElement('div');
     card.className = 'card';
 
-    // Montagem da Equipe
-    const equipe = [item.MOTORISTA, item.AJUDANTE, item.TECNICOS].filter(x => limpar(x)).join(' + ') || '-';
-
     card.innerHTML = `
         <div class="card-header">
-            <div class="hora-box">${limpar(item.HORA) || 'CONFIRMAR'}</div>
-            <div class="tipo-badge">${limpar(item.TIPO) || 'SERVIÇO'}</div>
+            <div class="hora">${i.HORA || 'CONFIRMAR'}</div>
+            <div class="tipo">${i.TIPO || '-'}</div>
         </div>
 
-        <div class="cliente-nome">${limpar(item.CLIENTE) || 'NÃO INFORMADO'}</div>
-        
-        <div class="cidade-veiculo">
-            <span>📍 ${limpar(item.CIDADE) || '---'}</span>
-            ${limpar(item.VEICULO) ? `<span>🚚 ${item.VEICULO}</span>` : ''}
+        <div class="cliente">${i.CLIENTE}</div>
+
+        <div class="meta">📍 ${i.CIDADE} ${i.VEICULO ? '🚚 '+i.VEICULO : ''}</div>
+
+        <div class="equip">${i.EQUIPAMENTOS || '-'}</div>
+
+        <div class="grid">
+            <div class="box tensao">⚡ ${i.TENSAO || '-'}</div>
+            <div class="box equipe">👥 ${equipe}</div>
+            <div class="box franquia">⏱️ ${i.FRANQUIA || '-'}</div>
+            <div class="box periodo">📅 ${i.PERIODO || '-'}</div>
+            <div class="box diesel">⛽ ${i.COMBUSTIVEL || '-'}</div>
+            <div class="box instalacao">📦 ${i.INSTALACAO || '-'}</div>
         </div>
 
-        <div class="equipamentos-box">
-            <span class="equip-label">Equipamentos / Acessórios</span>
-            <div class="equip-lista">${limpar(item.EQUIPAMENTOS) || 'Consultar logística'}</div>
-        </div>
-
-        <div class="grid-infos">
-            ${renderGridItem('⚡', 'Tensão', item.TENSAO, 'g-tensao')}
-            ${renderGridItem('👥', 'Equipe', equipe, 'g-equipe')}
-            ${renderGridItem('⏱️', 'Franquia', item.FRANQUIA, 'g-franquia')}
-            ${renderGridItem('📅', 'Período', item.PERIODO, 'g-periodo')}
-            ${renderGridItem('⛽', 'Diesel', item.COMBUSTIVEL, 'g-diesel')}
-            ${renderGridItem('📦', 'Instalação', item.INSTALACAO, 'g-instalacao')}
-        </div>
-
-        ${limpar(item.OBSERVACAO) ? `<div class="obs-footer">💬 ${item.OBSERVACAO}</div>` : ''}
+        ${i.OBSERVACAO ? `<div class="obs">${i.OBSERVACAO}</div>` : ''}
     `;
+
     return card;
 }
 
-function renderGridItem(icon, label, value, cls) {
-    const val = limpar(value);
-    if (!val || val === '-') return `<div class="info-item" style="opacity:0.2"><div class="info-text"><span class="info-label">${label}</span><span class="info-value">-</span></div></div>`;
-    return `
-        <div class="info-item ${cls}">
-            <span class="info-icon">${icon}</span>
-            <div class="info-text">
-                <span class="info-label">${label}</span>
-                <span class="info-value">${val}</span>
-            </div>
-        </div>
-    `;
+/* TIMER */
+function startTimer() {
+    let t = CONFIG.refreshSeconds;
+
+    setInterval(() => {
+        t--;
+        const m = String(Math.floor(t/60)).padStart(2,'0');
+        const s = String(t%60).padStart(2,'0');
+        document.getElementById('timer').innerText = `${m}:${s}`;
+
+        if (t <= 0) {
+            t = CONFIG.refreshSeconds;
+            fetchData();
+        }
+    }, 1000);
 }
+
+/* START */
+fetchData();
+startTimer();

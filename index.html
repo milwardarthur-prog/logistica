@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoramento Logístico - Full HD</title>
+    <title>Monitoramento Logístico</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="top-bar">
-        <div class="logo">LOGÍSTICA SEMANAL</div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Filtrar por cliente, cidade, equipamento, tipo...">
-        </div>
-        <div class="refresh-info">
-            <span>Próxima atualização em: <strong id="timer">05:00</strong></span>
-        </div>
-    </header>
 
-    <main id="painelContainer">
-        <!-- As linhas de dias e os cards serão gerados aqui pelo script.js -->
-    </main>
+<header class="top-bar">
+    <div class="logo">LOGÍSTICA SEMANAL</div>
 
-    <script src="script.js"></script>
+    <input type="text" id="searchInput" placeholder="Filtrar...">
+
+    <div class="timer">
+        Próxima atualização: <span id="timer">05:00</span>
+    </div>
+</header>
+
+<main id="painelContainer"></main>
+
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,87 +1,145 @@
 :root {
-    --bg-body: #1a1a1a; /* Escuro para destacar as linhas brancas */
-    --bg-card: #ffffff;
-    --text-primary: #212529;
-    --border-radius: 12px;
+    --bg: #111;
+    --card: #fff;
+    --text: #222;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-body { background-color: var(--bg-body); overflow: hidden; }
+body {
+    background: var(--bg);
+    overflow: hidden;
+}
 
-.top-bar { height: 40px; background: #000; color: #fff; display: flex; align-items: center; padding: 0 20px; font-size: 0.8rem; justify-content: space-between; }
+/* HEADER */
+.top-bar {
+    height: 40px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 12px;
+}
 
-#painelContainer { height: calc(100vh - 40px); display: flex; flex-direction: column; }
+.top-bar input {
+    padding: 5px 10px;
+}
 
-.dia-row { flex: 1; display: flex; border-bottom: 2px solid #333; min-height: 0; }
+/* LAYOUT */
+#painelContainer {
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.dia-row {
+    flex: 1;
+    display: flex;
+    border-bottom: 1px solid #333;
+}
 
 .dia-label {
-    width: 100px; background: #222; color: #fff; border-right: 2px solid #444;
-    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    width: 110px;
+    background: #222;
+    color: #fbbf24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
-.dia-nome { font-size: 0.9rem; font-weight: bold; color: #fbbf24; }
-.dia-data { font-size: 0.7rem; opacity: 0.7; }
 
-.cards-container { flex: 1; display: flex; overflow-x: auto; align-items: stretch; padding: 8px; gap: 10px; background: #111; }
-.cards-container::-webkit-scrollbar { display: none; }
+.cards-container {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    overflow-x: auto;
+    background: #1a1a1a;
+}
 
-/* ─── CARD ESTILO IMAGEM ────────────────────────────── */
+/* CARD */
 .card {
-    min-width: 480px; max-width: 480px; /* Um pouco mais largo para caber o grid lateral */
-    background: var(--bg-card);
-    border-radius: var(--border-radius);
+    min-width: 460px;
+    background: white;
+    border-radius: 10px;
     padding: 12px;
-    display: flex; flex-direction: column; gap: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-/* Linha 1: Hora e Tipo */
-.card-header { display: flex; justify-content: space-between; align-items: center; }
-.hora-box { 
-    background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe;
-    padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 0.9rem;
-}
-.tipo-badge {
-    border: 1px solid #ddd; padding: 4px 15px; border-radius: 20px;
-    font-size: 0.75rem; font-weight: bold; color: #444; text-transform: uppercase;
+/* HEADER CARD */
+.card-header {
+    display: flex;
+    justify-content: space-between;
 }
 
-/* Infos Cliente e Local */
-.cliente-nome { font-size: 1.5rem; font-weight: 800; color: #111; text-transform: uppercase; margin-bottom: -2px; }
-.cidade-veiculo { display: flex; gap: 15px; font-size: 0.9rem; color: #666; font-weight: 600; }
-
-/* Bloco Equipamentos */
-.equipamentos-box {
-    background: #f1f5f9; padding: 8px 12px; border-radius: 8px;
+.hora {
+    background: #e0e7ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
 }
-.equip-label { font-size: 0.65rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; display: block; margin-bottom: 2px; }
-.equip-lista { font-size: 0.85rem; color: #334155; font-weight: 500; line-height: 1.2; }
 
-/* ─── GRID DE BLOCOS COLORIDOS (Igual a Imagem) ──────── */
-.grid-infos {
+.tipo {
+    border: 1px solid #ccc;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+/* CLIENTE */
+.cliente {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* META */
+.meta {
+    font-size: 14px;
+    color: #555;
+}
+
+/* EQUIPAMENTOS */
+.equip {
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* GRID */
+.grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 5px;
 }
 
-.info-item {
-    display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.05);
+.box {
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 12px;
 }
-.info-icon { font-size: 1.4rem; }
-.info-text { display: flex; flex-direction: column; }
-.info-label { font-size: 0.55rem; font-weight: 800; color: rgba(0,0,0,0.4); text-transform: uppercase; }
-.info-value { font-size: 0.85rem; font-weight: 700; color: rgba(0,0,0,0.8); }
 
-/* Cores do Grid */
-.g-tensao { background: #fef3c7; border-color: #fcd34d; }
-.g-equipe { background: #f1f5f9; border-color: #cbd5e1; }
-.g-franquia { background: #dcfce7; border-color: #86efac; }
-.g-periodo { background: #e0f2fe; border-color: #7dd3fc; }
-.g-diesel { background: #fee2e2; border-color: #fca5a5; }
-.g-instalacao { background: #f3f4f6; border-color: #d1d5db; }
+.tensao { background: #fef3c7; }
+.equipe { background: #e5e7eb; }
+.franquia { background: #dcfce7; }
+.periodo { background: #e0f2fe; }
+.diesel { background: #fee2e2; }
+.instalacao { background: #f3f4f6; }
 
-/* Observação */
-.obs-footer {
-    background: #fffbeb; border-left: 4px solid #fbbf24;
-    padding: 6px 10px; border-radius: 4px; font-size: 0.8rem; font-style: italic; color: #92400e;
+/* OBS */
+.obs {
+    background: #fffbe6;
+    padding: 6px;
+    font-size: 12px;
+    border-left: 3px solid orange;
 }
